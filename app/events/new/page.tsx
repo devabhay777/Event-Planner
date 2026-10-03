@@ -1,11 +1,11 @@
+import { Button } from '@/components/ui/button'
 import { Card, CardTitle, CardHeader, CardContent } from '@/components/ui/card'
-import { Form, FormField } from '@/components/ui/form'
+import { Field, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from 'radix-ui'
-import { useForm } from 'react-hook-form'
+import Link from 'next/link'
+import { createEventAction } from '@/lib/actions/event'
 
-export default async function NewEventPage() {
-  const form = useForm()
+export default function NewEventPage() {
   return (
     <div className="mx-auto w-full max-w-2xl">
       <Card>
@@ -13,17 +13,46 @@ export default async function NewEventPage() {
           <CardTitle>Create Event</CardTitle>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <FormField>
-              <Label>Title</Label>
+          <form action={createEventAction}>
+            <Field>
+              <FieldLabel htmlFor="title">Title</FieldLabel>
               <Input
                 id="title"
                 name="title"
                 required
                 placeholder="Team dinner..."
               />
-            </FormField>
-          </Form>
+
+              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <Input
+                id="description"
+                name="description"
+                placeholder="Optional details about the event"
+              />
+
+              <FieldLabel htmlFor="location">Location</FieldLabel>
+              <Input
+                id="location"
+                name="location"
+                placeholder="Optional location"
+              />
+
+              <FieldLabel htmlFor="eventDate">Date and time</FieldLabel>
+              <Input
+                id="eventDate"
+                name="eventDate"
+                type="datetime-local"
+                required
+              />
+
+              <div className="flex items-center gap-3">
+                <Button type="submit">Create event</Button>
+                <Button type="button" variant="outline" asChild>
+                  <Link href="/dashboard">Cancel</Link>
+                </Button>
+              </div>
+            </Field>
+          </form>
         </CardContent>
       </Card>
     </div>
